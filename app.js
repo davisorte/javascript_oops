@@ -1,24 +1,33 @@
+
 function populate(){
 	if(quiz.isEnded()){
-		//showscore
+		showScores();
 	}
 	else{
-		var element= document.getElementByid("question");
-		element.innerHtml = quiz.getQuestionIndex().text;
+		console.log(quiz.getQuestionIndex().text);
+		var element = document.getElementById("question");
+		element.innerHTML = quiz.getQuestionIndex().text;
+
+       
 	
 		var choices = quiz.getQuestionIndex().choices;
 		for(var i=0;i<choices.length; i++){
-			var element = document.getElementByid("choice"+ i);
-			element.innerHtml =choices[i];
+
+			var element = document.getElementById("choice"+ i);
+			
+			 console.log(choices[i]);
+			 console.log(choices.length);
+			element.innerHTML = choices[i];
 			guess("btn" + i, choices[i]);
 		}
 
-	}
-}
+        showProgress();
+    }
+};
 
 
 function guess(id, guess) {
-	var button =document.getElementByid(id);
+	var button =document.getElementById(id);
 	button.onclick =function(){
 		quiz.guess(guess);
 		populate();
@@ -28,15 +37,15 @@ function guess(id, guess) {
 
 function showProgress(){
 	var currentQuestionNumber =quiz.questionIndex +1;
-	var element =document.getElementByid("progress");
+	var element =document.getElementById("progress");
 	element.innerHTML ="Question " + currentQuestionNumber + "of" + quiz.questions.length;
 }
 
 
 function showScores(){
 	var gameOverHtml  = "h1> Result</h1>";
-	gameOverHtml + ="<h2 id='score'> Your score" + quiz.score +"</h2>";
-	var element = document.getElementByid("quiz");
+	gameOverHtml += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
+	var element = document.getElementById("quiz");
 	element.innerHTML = gameOverHtml;
 
 }
@@ -45,17 +54,33 @@ function showScores(){
 
 
 
-var questions = {
-	new Questions ("Which one is not an object oriented programming language?",["java","c#","c++","c"],"c"),
-	new Questions ("Which one is not an object oriented programming language?",["java","c#","c++","c"],"c"),
-	new Questions ("Which one is not an object oriented programming language?",["java","c#","c++","c"],"c"),
-	new Questions ("Which one is not an object oriented programming language?",["java","c#","c++","c"],"c"),
-	new Questions ("Which one is not an object oriented programming language?",["java","c#","c++","c"],"c"),
-	
 
-};
+var questions = [
+    new Question("Which one is not an object oriented programming language?", ["Java", "C#","C++", "C"], "C"),
+    new Question("Which language is used for styling web pages?", ["HTML", "JQuery", "CSS", "XML"], "CSS"),
+    new Question("There are ____ main components of object oriented programming.", ["1", "6","2", "4"], "4"),
+    new Question("Which language is used for web apps?", ["PHP", "Python", "Javascript", "All"], "All"),
+    new Question("MVC is a ____.", ["Language", "Library", "Framework", "All"], "Framework")
+];
 
 var quiz = new Quiz(questions);
 
+// display quiz
 populate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
